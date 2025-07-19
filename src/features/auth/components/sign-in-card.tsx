@@ -22,25 +22,23 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Car } from "lucide-react";
-
-const formSchema = z.object({
-    email: z.string().email().trim().min(1, "Email is required"),
-    password: z.string().min(8, "Minimum of 8 characters").max(20)
-});
+import { loginSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
 
 export const SignInCard = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { mutate } = useLogin(); 
+
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: ""
         }
     });
     
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log("Form submitted with values:", values);
-        // Handle form submission logic here
-    }
+    const onSubmit = (values: z.infer<typeof loginSchema>) => {
+        mutate({json: values}); 
+    };
 
     return(
         <Card className="h-full w-full md:w-[487px] border-none shadow-none">
