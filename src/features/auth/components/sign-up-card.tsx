@@ -1,3 +1,5 @@
+"use client";
+
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 import { useForm } from "react-hook-form";
@@ -28,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 export const SignUpCard = () => {
-    const { mutate } = useRegister();
+    const { mutate, isPending } = useRegister();
 
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
@@ -76,7 +78,6 @@ export const SignUpCard = () => {
                                             {...field}
                                             type="text"
                                             placeholder="Enter your name"
-                                            disabled={false}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -93,7 +94,7 @@ export const SignUpCard = () => {
                                             {...field}
                                             type="email"
                                             placeholder="Enter Email Address"
-                                            disabled={false}
+                                            
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -117,8 +118,8 @@ export const SignUpCard = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button disabled={false} size="lg" className="w-full">
-                            Login
+                        <Button disabled={isPending} size="lg" className="w-full">
+                            Register
                         </Button>
                     </form>
                 </Form>
@@ -128,7 +129,7 @@ export const SignUpCard = () => {
             </div>
             <CardContent className="p-7 flex flex-col gap-y-4">
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant="secondary"
                     size="lg"
                     className="w-full">
@@ -136,7 +137,7 @@ export const SignUpCard = () => {
                     Login with Google
                 </Button>
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant="secondary"
                     size="lg"
                     className="w-full">
