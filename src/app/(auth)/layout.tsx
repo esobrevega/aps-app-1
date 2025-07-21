@@ -10,7 +10,7 @@ interface AuthLayoutProps {
     children: React.ReactNode;
 };
 
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const AuthLayout = ({ children}: AuthLayoutProps) => {
     const pathname = usePathname();
 
     return(
