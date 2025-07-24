@@ -6,6 +6,8 @@ import Image from "next/image"
 import { useRef } from "react"; 
 import { useForm } from "react-hook-form";
 import { ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 import { createWorkspaceSchema } from "../schemas";
 import { useCreateWorkspace } from "../api/use-create-workspace";
@@ -24,14 +26,13 @@ import {
     FormMessage
 } from "@/components/ui/form";
 
-
-
 interface CreateWorkspaceFormProps {
     onCancel?: () => void;
 };
 
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
-   const { mutate,isPending } = useCreateWorkspace();
+    const router = useRouter();
+    const { mutate,isPending } = useCreateWorkspace();
 
    const inputRef = useRef<HTMLInputElement>(null);
    
@@ -49,9 +50,10 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
         };
 
         mutate({ form: finalValues }, {
-           onSuccess: () => {
+           onSuccess: ({ data }) => {
             form.reset();
-            // redirect to new workspace
+            // onCancel?.();
+            router.push(`/workspaces/${data.$id}`);
            }
         });
     };
@@ -64,8 +66,9 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     }
 
     return (
-        <Card className="w-full h-full border-none shadow-none">
-            <CardHeader className="flex p-7">
+        <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-3 bg-blue-500 z-10" />
+            <CardHeader className="flex px-7 pt-3 pb-1">
                 <CardTitle className="text-xl font-bold">
                     Create a new workspace
                 </CardTitle>
@@ -73,7 +76,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
             <div className="px-7">
                 <DottedSeparator />
             </div>
-            <CardContent className="p-7">
+            <CardContent className="px-7 pt-1 pb-1">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-4">
@@ -134,6 +137,23 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                                     onChange={handleImageChange}
                                                     disabled={isPending}
                                                 />
+                                                {field.value ? (
+                                                <Button
+                                                    type="button"
+                                                    disabled={isPending}
+                                                    variant="destructive"
+                                                    size="xs"
+                                                    className="w-fit mt-2"
+                                                    onClick={() => {
+                                                        field.onChange(null);
+                                                        if (inputRef.current){
+                                                            inputRef.current.value = "";
+                                                        }
+                                                    }}
+                                                >
+                                                    Remove Image
+                                                </Button> 
+                                                ):(
                                                 <Button
                                                     type="button"
                                                     disabled={isPending}
@@ -144,6 +164,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                                 >
                                                     Upload Image
                                                 </Button>
+                                                )}
                                             </div>
                                         </div>
                                     </div> 
@@ -158,6 +179,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                 variant="secondary"
                                 onClick={onCancel}
                                 disabled={isPending}
+                                className={cn(!onCancel && "invisible")}
                             >
                                 Cancel
                             </Button>
