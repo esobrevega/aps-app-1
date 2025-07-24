@@ -12,7 +12,9 @@ const buttonVariants = cva(
         primary:
           "bg-gradient-to-b from-blue-600 to-blue-700 text-primary-foreground hover:from-blue-700 hover:to-blue-700",
         destructive:
-          "bg-gradient-to-b from-amber-600 to-amber-700 text-destructive-foreground hover:from-amber-700 hover:to-amber-700",
+          "bg-gradient-to-b from-red-400 to-red-400 text-destructive-foreground text-white hover:from-amber-700 hover:to-amber-700",
+        destructive_secondary:
+          "bg-white text-red-700 hover:bg-neutral-100",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
@@ -37,17 +39,19 @@ const buttonVariants = cva(
   }
 )
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
+// export interface ButtonProps
+//   extends React.ButtonHTMLAttributes<HTMLButtonElement>
+//     VariantProps<typeof buttonVariants> {
+//       asChild?:boolean
+//     }
+
+type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
+    asChild?: boolean;
+  };
+
+function Button({ className, variant, size, asChild = false, ...props }: ButtonProps) {
+  const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
@@ -55,7 +59,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants, type ButtonProps }

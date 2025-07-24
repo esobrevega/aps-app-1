@@ -23,10 +23,8 @@ import {
  } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { Car } from "lucide-react";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
-import { is } from "date-fns/locale";
 
 export const SignInCard = () => {
     const { mutate, isPending } = useLogin(); 
