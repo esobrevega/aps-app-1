@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Fragment } from "react";
-import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader, Loader2, LoaderPinwheel, LucideLoader, MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -31,7 +31,8 @@ export const MembersList = () => {
         "destructive"
     );
 
-    const { data } = useGetMembers({ workspaceId });
+    const { data, isLoading } = useGetMembers({ workspaceId });
+
     const {
         mutate: deleteMember,
         isPending: isDeletingMember
@@ -76,7 +77,12 @@ export const MembersList = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="pb-3">
-                {data?.documents.map(( member,index ) => (
+                {isLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                        <LucideLoader className="size-6 animate-spin text-blue-500" />
+                    </div>
+                ) : (
+                data?.documents.map(( member,index ) => (
                     <Fragment key={member.$id}>
                         <div className="flex items-center gap-2">
                             <MemberAvatar 
@@ -128,7 +134,7 @@ export const MembersList = () => {
                             <Separator className="my-2.5"/>
                         )}
                     </Fragment>
-                )) }
+                )))}
             </CardContent>
         </Card>
     );

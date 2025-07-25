@@ -23,5 +23,6 @@ export const useGetMembers = ({
             return data;
         },
     });
+
     return query;
 };

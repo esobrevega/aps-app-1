@@ -57,8 +57,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
         mutate({ form: finalValues }, {
            onSuccess: ({ data }) => {
             form.reset();
-            // onCancel?.();
-            router.refresh();
+            router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
            }
         });
     };
@@ -72,7 +71,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
 
     return (
         <Card className="w-full h-full border-none shadow-none">
-            <div className="absolute top-0 left-0 w-full h-2 bg-blue-500 z-10 rounded-t-lg" style={{ top: "-1px", left: 0 }} />
+            <div className="absolute top-0 left-0 w-full h-3 bg-violet-500 z-10 rounded-t-lg" style={{ top: "-1px", left: 0 }} />
             <CardHeader className="flex px-7 pt-3 pb-1">
                 <CardTitle className="text-xl font-bold">
                     Create a new Project
@@ -192,6 +191,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
                                 type="submit"    
                                 size="lg"
                                 disabled={isPending}
+                                className="bg-violet-500 hover:bg-violet-600 text-white"
                             >
                                 Create Project
                             </Button>

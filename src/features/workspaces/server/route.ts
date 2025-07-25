@@ -101,8 +101,8 @@ const app = new Hono()
             return c.json({ data: workspace });
         }
     )
-    
-/* PATCH for updating details */
+
+/* PATCH for updating workspace details */
     .patch(
         "/:workspaceId",
         sessionMiddleware,

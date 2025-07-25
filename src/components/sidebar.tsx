@@ -6,7 +6,11 @@ import { DottedSeparator } from "./dotted-separator";
 import { WorkspaceSwitcher } from "./workspace-switcher";
 import { Projects } from "./projects";
 
+import { useWorkspaceSwitcher } from "@/features/workspaces/hooks/use-workspace-switcher";
+
 export const Sidebar = () => {
+   // const { isLoading } = useWorkspaceSwitcher();
+    
     return (
         <aside className="h-full bg-neutral-100 p-4 w-full">
             <Link href="/">
