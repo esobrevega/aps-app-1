@@ -42,7 +42,7 @@ import { useConfirmReset } from "@/hooks/use-confirm-reset";
 interface EditWorkspaceFormProps {
     onCancel?: () => void;
     initialValues: Workspace;
-};
+}
 
 export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceFormProps) => {
     const router = useRouter();
@@ -265,8 +265,10 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
                                     Cancel
                                 </Button>
                                 <Button
+                                    variant="secondary"
+                                    className="w-fit text-blue-500"
                                     type="submit"    
-                                    size="lg"
+                                    size="sm"
                                     disabled={isPending}
                                 >
                                     Save Changes
@@ -301,9 +303,9 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
                         </div>
                         <DottedSeparator className="py-7"/>
                         <Button 
-                            className="mt-6 w-fit ml-auto"
+                            className="mt-6 w-fit ml-auto text-green-500"
                             size="sm"
-                            variant="destructive_secondary"
+                            variant="secondary"
                             type="button"
                             disabled={isPending || isResettingInviteCode}
                             onClick={handleResetInviteCode}
