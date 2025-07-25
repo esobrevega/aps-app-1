@@ -14,7 +14,7 @@ import { createWorkspaceSchema, updateWorkspaceSchema } from "../schemas";
 import { Workspace } from "../types";
 
 const app = new Hono()
-    /* GET for getting all workspace */
+/* GET for getting all workspace */
     .get(
         "/",
         sessionMiddleware,
@@ -46,7 +46,7 @@ const app = new Hono()
             return c.json({data: workspaces});
     })
 
-    /* POST for creating Workspace */
+/* POST for creating Workspace */
     .post(
         "/",
         zValidator("form", createWorkspaceSchema),
@@ -101,8 +101,8 @@ const app = new Hono()
             return c.json({ data: workspace });
         }
     )
-    
-    /* PATCH for updating details */
+
+/* PATCH for updating workspace details */
     .patch(
         "/:workspaceId",
         sessionMiddleware,
@@ -158,7 +158,7 @@ const app = new Hono()
         }
     )
     
-    /* DELETE for deleting workspace */
+/* DELETE for deleting workspace */
     .delete(
         "/:workspaceId",
         sessionMiddleware,
@@ -190,7 +190,7 @@ const app = new Hono()
         }
     )
 
-    /* POST for resetting invite code */
+/* POST for resetting invite code */
     .post(
         "/:workspaceId/reset-invite-code",
         sessionMiddleware,
@@ -223,7 +223,7 @@ const app = new Hono()
         }
     )
 
-    /* POST for joining a workspace */
+/* POST for joining a workspace */
     .post(
         "/:workspaceId/join",
         sessionMiddleware,

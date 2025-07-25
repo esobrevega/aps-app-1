@@ -44,7 +44,8 @@ export const JoinWorkspaceForm = ({
 
     return (
         <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
-            <CardHeader className="p-7">
+                <div className="absolute top-0 left-0 w-full h-3 bg-green-500 z-10" />
+            <CardHeader className="px-7 pt-3 pb-1">
                 <CardTitle className="text-xl font-bold">
                     Join Workspace
                 </CardTitle>
@@ -55,7 +56,7 @@ export const JoinWorkspaceForm = ({
             <div className="px-7">
                 <DottedSeparator/>
             </div>
-            <CardContent className="p-7">
+            <CardContent className="px-7 pt-3 pb-1">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-y-2 lg:gap-y-0 lg:gap-x-2">
                     <Button 
                         variant="secondary"
