@@ -10,17 +10,19 @@ import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher
 import { Button } from "@/components/ui/button";
 
 interface ProjectIdPageProps {
-    params: { projectId: string};
+    params: { projectId: string };
 }
 
 const ProjectIdPage = async ({
-     params, 
+    params
 }: ProjectIdPageProps) => {
     const user = await getCurrent();
     if (!user) redirect("/sign-in");
 
+    const paramsA = await params;
+
     const initialValues = await getProject({ 
-        projectId: params.projectId 
+        projectId: paramsA.projectId 
     });
 
     if (!initialValues) {

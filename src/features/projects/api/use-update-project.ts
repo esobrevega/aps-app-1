@@ -31,6 +31,8 @@ export const useUpdateProject = () => {
             router.refresh();
             queryClient.invalidateQueries({ queryKey: ["projects"]  });
             queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
+            queryClient.invalidateQueries({ queryKey: ["tasks"] });
+            queryClient.refetchQueries({ queryKey: ["tasks"] });
         },
         onError: () => {
             toast.error("Project update failed!");

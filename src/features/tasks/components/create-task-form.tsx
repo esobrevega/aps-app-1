@@ -104,6 +104,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                     </FormItem>
                                 )}
                             />
+                            {/* Assignee */}
                             <FormField
                                 control={form.control}
                                 name="assigneeId"
@@ -140,6 +141,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                     </FormItem>
                                 )}
                             />
+                            {/* Status */}
                             <FormField
                                 control={form.control}
                                 name="status"
@@ -159,23 +161,27 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                             </FormControl>
                                             <FormMessage />
                                             <SelectContent>
-                                                <SelectItem value={TaskStatus.BACKLOG}>
-                                                    Backlog
+                                                <SelectItem value={TaskStatus.TODO}>
+                                                    To Do
                                                 </SelectItem>
                                                 <SelectItem value={TaskStatus.IN_PROGRESS}>
                                                     In Progress
                                                 </SelectItem>
-                                                <SelectItem value={TaskStatus.TODO}>
-                                                    To Do
+                                                <SelectItem value={TaskStatus.IN_REVIEW}>
+                                                    In Review
                                                 </SelectItem>
                                                 <SelectItem value={TaskStatus.DONE}>
                                                     Completed
+                                                </SelectItem>
+                                                <SelectItem value={TaskStatus.BACKLOG}>
+                                                    Backlog
                                                 </SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </FormItem>
                                 )}
                             />
+                            {/* Project */}
                             <FormField
                                 control={form.control}
                                 name="projectId"

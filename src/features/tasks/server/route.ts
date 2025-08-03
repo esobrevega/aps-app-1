@@ -3,16 +3,17 @@ import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 
+import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
+
 import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 
-import { getMember } from "@/features/members/utils";
-
 import { createTaskSchema } from "../schemas";
-import { TaskStatus } from "../types";
-import { createAdminClient } from "@/lib/appwrite";
-import { Project } from "@/features/projects/types";
+import { Task, TaskStatus } from "../types";
+
 import { Member } from "@/features/members/types";
+import { Project } from "@/features/projects/types";
+import { getMember } from "@/features/members/utils";
 
 const app = new Hono()
 /* Get for fetching tasks */
@@ -83,7 +84,7 @@ const app = new Hono()
                 query.push(Query.search("name", search));
             }
 
-            const tasks = await databases.listDocuments(
+            const tasks = await databases.listDocuments<Task>(
                 DATABASE_ID,
                 TASKS_ID,
                 query
@@ -197,4 +198,5 @@ const app = new Hono()
         }
             
     )
+    
 export default app;
