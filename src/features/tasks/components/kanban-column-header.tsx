@@ -36,6 +36,14 @@ const statusIconMap: Record<TaskStatus, React.ReactNode> = {
     ),
 }
 
+const statusColorMap: Record<TaskStatus, string> = {
+    [TaskStatus.BACKLOG]: "text-gray-500",
+    [TaskStatus.TODO]: "text-blue-500",
+    [TaskStatus.IN_PROGRESS]: "text-red-500",
+    [TaskStatus.IN_REVIEW]: "text-yellow-500",
+    [TaskStatus.DONE]: "text-green-500",
+}
+
 export const KanbanColumnHeader = ({ 
     board, 
     taskCount 
@@ -43,6 +51,7 @@ export const KanbanColumnHeader = ({
     const { open } = useCreateTaskModal();
 
     const icon = statusIconMap[board];
+    const colorS = statusColorMap[board];
 
     return (
         <div className="px-2 py-1.5 flex items-center justify-between">

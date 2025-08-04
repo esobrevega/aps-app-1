@@ -13,6 +13,7 @@ import { Task, TaskStatus } from "../types";
 
 import { Project } from "@/features/projects/types";
 import { getMember } from "@/features/members/utils";
+import { getWorkspace } from "@/features/workspaces/queries";
 
 const app = new Hono()
 /* GET for fetching multiple tasks */
@@ -347,5 +348,66 @@ const app = new Hono()
         }
             
     )
+
+/* POST for bulk update */
+    .post(
+        "/bulk-update",
+        sessionMiddleware,
+        zValidator(
+            "json",
+            z.object({
+                tasks: z.array(
+                    z.object({
+                        $id: z.string(),
+                        status: z.enum(TaskStatus),
+                        position: z.number().int().positive().min(1000).max(1_000_000),
+                    })
+                )
+            })
+        ),
+        async (c) => {
+            const user = c.get("user");
+            const databases = c.get("databases");
+            const { tasks } = await c.req.valid("json");
+
+            const tasksToUpdate = await databases.listDocuments(
+                DATABASE_ID,
+                TASKS_ID,
+                [Query.contains("$id", tasks.map((task) => task.$id))]
+            );
+
+            const workspaceIds = new Set(tasksToUpdate.documents.map(task => task.workspaceId));
+            if (workspaceIds.size !== 1) {
+                return c.json({ error: "Tasks must belong to the same workspace" }, 400);
+            }
+
+            const workspaceId = workspaceIds.values().next().value;
+
+            const member = await getMember({
+                databases,
+                workspaceId,
+                userId: user.$id,
+            });
+
+            if (!member) {
+                return c.json({ error: "Unauthorized" }, 401);
+            }
+
+            const updatedTasks = await Promise.all(
+                tasks.map(async (task) => {
+                    const { $id, status, position } = task;
+                    return databases.updateDocument<Task>(
+                        DATABASE_ID,
+                        TASKS_ID,
+                        $id,
+                        { status, position }
+                    );
+                })
+            );
+
+            return c.json({ data: updatedTasks });
+        }
+    )
+
     
 export default app;
