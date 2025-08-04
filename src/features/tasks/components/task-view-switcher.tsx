@@ -13,9 +13,10 @@ import { DataFilters } from "./data-filters";
 
 import { useGetTasks } from "../api/use-get-tasks"; 
 import { useTaskFilters } from "../hooks/use-task-filters";
-import { useCreateTasksModal } from "../hooks/use-tasks-modal";
+import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { DataKanban } from "./data-kanban";
 
 
 export const TaskViewSwitcher = () => {
@@ -43,7 +44,7 @@ export const TaskViewSwitcher = () => {
         dueDate, 
     });
 
-    const { open } = useCreateTasksModal();
+    const { open } = useCreateTaskModal();
 
     return (
         <Tabs
@@ -56,19 +57,19 @@ export const TaskViewSwitcher = () => {
                     <TabsList className="w-full lg:w-auto"> 
                         <TabsTrigger
                             value="table"
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full lg:w-auto cursor-pointer"
                         >
                             Table
                         </TabsTrigger>
                         <TabsTrigger
                             value="kanban"
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full lg:w-auto cursor-pointer"
                         >
                             Kanban
                         </TabsTrigger>
                         <TabsTrigger
                             value="calendar"
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full lg:w-auto cursor-pointer"
                         >
                             Calendar
                         </TabsTrigger>
@@ -76,7 +77,7 @@ export const TaskViewSwitcher = () => {
                     <Button
                         onClick={open}
                         size="sm"
-                        className="w-full lg:w-auto"
+                        className="w-full lg:w-auto cursor-pointer"
                     >
                         <PlusIcon className="mr-2 size-4" />
                         New                      
@@ -95,7 +96,7 @@ export const TaskViewSwitcher = () => {
                         <DataTable columns={columns} data={tasks?.documents ?? []} />
                     </TabsContent>
                     <TabsContent value="kanban" className="mt-0">
-                        {JSON.stringify(tasks)}
+                        <DataKanban data={tasks?.documents ?? []} />
                     </TabsContent>
                     <TabsContent value="calendar" className="mt-0">
                         {JSON.stringify(tasks)}

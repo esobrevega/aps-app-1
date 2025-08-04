@@ -9,6 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { useConfirm } from "@/hooks/use-confirm";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+
+import { useDeleteTask } from "../api/use-delete-task";
+
+import { useRouter } from "next/navigation";
+import { useEditTaskModal } from "../hooks/use-edit-task-modal";
+
 interface TaskActionsProps {
   id: string;
   projectId: string;
@@ -20,8 +28,38 @@ export const TaskActions = ({
     projectId,
     children,
 }: TaskActionsProps) => {
+
+    const workspaceId = useWorkspaceId();
+    const router = useRouter();
+
+    const { open} = useEditTaskModal();
+
+    const [ConfirmDialog, confirm] = useConfirm(
+        "Delete Permit",
+        "This action cannot be undone.",
+        "destructive"
+    );
+
+    const { mutate, isPending } = useDeleteTask();
+
+    const onDelete = async () => {
+        const ok = await confirm();
+        if (!ok) return;
+
+        mutate({ param: { taskId: id } });
+    };
+
+    const onOpenTask = () => {
+        router.push(`/workspaces/${workspaceId}/tasks/${id}`);
+    };
+
+    const onOpenProject = () => {
+        router.push(`/workspaces/${workspaceId}/projects/${projectId}`);
+    };
+    
     return (
         <div className="flex justify-end">
+            <ConfirmDialog />
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     {children}
@@ -30,7 +68,7 @@ export const TaskActions = ({
                     <DropdownMenuLabel>Permit Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                        onClick={() => {}}
+                        onClick={onOpenTask}
                         disabled={false}
                         className="font-medium p-[10px]"
                     >
@@ -38,7 +76,7 @@ export const TaskActions = ({
                         Permit Details
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                        onClick={() => {}}
+                        onClick={onOpenProject}
                         disabled={false}
                         className="font-medium p-[10px]"
                     >
@@ -46,7 +84,7 @@ export const TaskActions = ({
                         Open Project
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                        onClick={() => {}}
+                        onClick={() => open(id)}
                         disabled={false}
                         className="font-medium p-[10px]"
                     >
@@ -54,8 +92,8 @@ export const TaskActions = ({
                         Edit Permit
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                        onClick={() => {}}
-                        disabled={false}
+                        onClick={onDelete}
+                        disabled={isPending}
                         className="text-red-700 focus:text-red-700 font-medium p-[10px]"
                     >
                         <Trash2Icon className="mr-2 size-4 stroke-2" />
