@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.15",
+    "@floating-ui/react-dom-interactions": "^0.13.3",
     "@hello-pangea/dnd": "^18.0.1",
     "@hono/zod-validator": "^0.7.1",
     "@hookform/resolvers": "^5.1.1",

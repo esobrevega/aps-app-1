@@ -28,8 +28,6 @@ export const useUpdateTask = () => {
         },
         onSuccess: ({ data }) => {
             toast.success("Permit Updated");
-
-            router.refresh();
             queryClient.invalidateQueries({ queryKey: ["tasks"] });
             queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
         },

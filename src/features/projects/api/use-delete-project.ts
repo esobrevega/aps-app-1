@@ -28,7 +28,6 @@ export const useDeleteProject = () => {
         },
         onSuccess: ({ data }) => {
             toast.success("Project Deleted");
-            router.refresh();
             queryClient.invalidateQueries({ queryKey: ["projects"]  });
             queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
         },

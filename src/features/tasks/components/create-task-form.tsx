@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { TaskStatus } from "../types";
@@ -16,12 +15,13 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Datepicker } from "@/components/date-picker";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DateTimePicker } from "@/components/date-time-picker";
+import { useCurrent } from "@/features/auth/api/use-current";
+
 
 
 interface CreateTaskFormProps {
@@ -32,8 +32,8 @@ interface CreateTaskFormProps {
 
 export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: CreateTaskFormProps) => {
     const workspaceId = useWorkspaceId();
-    const router = useRouter();
     const { mutate,isPending } = useCreateTask();
+    const { data: user } = useCurrent();
 
     type CreateTaskFormValues = z.input<typeof createTaskSchema>;
 
@@ -80,6 +80,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                             <Input 
                                                 {...field}
                                                 placeholder="Enter Permit name"
+                                                value={field.value ?? ""}
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -114,7 +115,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                             Assignee
                                         </FormLabel>
                                         <Select
-                                            defaultValue={field.value}
+                                            value={field.value}
                                             onValueChange={field.onChange}  
                                         >
                                             <FormControl>
@@ -151,12 +152,12 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                             Status
                                         </FormLabel>
                                         <Select
-                                            defaultValue={field.value}
+                                            value={field.value}
                                             onValueChange={field.onChange}  
                                         >
                                             <FormControl>
                                                 <SelectTrigger className="w-full">
-                                                    <SelectValue placeholder="Select status" />
+                                                    <SelectValue placeholder="IN PROGRESS" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <FormMessage />

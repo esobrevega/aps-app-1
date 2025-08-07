@@ -13,7 +13,6 @@ import { Task, TaskStatus } from "../types";
 
 import { Project } from "@/features/projects/types";
 import { getMember } from "@/features/members/utils";
-import { getWorkspace } from "@/features/workspaces/queries";
 
 const app = new Hono()
 /* GET for fetching multiple tasks */

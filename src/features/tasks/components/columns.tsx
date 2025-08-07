@@ -15,31 +15,38 @@ import { snakeCaseToTitleCase } from "@/lib/utils"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { HoverCardNearMouse } from "@/components/hover-mouse"
+import { TaskOverviewFull } from "./task-overview-full"
 
 
 export const columns: ColumnDef<Task>[] = [
 
   // Permit Column
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Permit Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    
-    cell: ({ row }) => {
-      const name = row.original.name;
-
-      return <p className="line-clamp-1">{name}</p>
-    }
+{
+  accessorKey: "name",
+  header: ({ column }) => {
+    return (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Permit Name
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    );
   },
+  cell: ({ row }) => {
+    const name = row.original.name;
+
+    return (
+      <HoverCardNearMouse content={
+        <TaskOverviewFull task={row.original} />
+      }>
+        <p className="line-clamp-1">{name}</p>
+      </HoverCardNearMouse>
+    );
+  },
+},
   
   // Project Column
   {
@@ -151,28 +158,26 @@ export const columns: ColumnDef<Task>[] = [
     }
   },
 
-  // Position Column test
-  {
-    accessorKey: "position",
-    header: "Position",
-  },
-
   // Actions Column 
   {
-  id: "actions",
-  cell: ({ row }) => {
-    const id = row.original.$id;
-    const projectId = row.original.projectId;
-    
-    return (
-      <TaskActions id={id} projectId={projectId}>
-        <Button variant="ghost" className="size-8 p-0">
-          <MoreVertical className="size-4" />
-        </Button>
-      </TaskActions>
-    )
+    id: "actions",
+    cell: ({ row }) => {
+      const id = row.original.$id;
+      const projectId = row.original.projectId;
+
+      const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent row onClick
+      };
+
+      return (
+        <div onClick={handleClick}>
+          <TaskActions id={id} projectId={projectId}>
+            <Button variant="ghost" className="size-8 p-0">
+              <MoreVertical className="size-4" />
+            </Button>
+          </TaskActions>
+        </div>
+      )
+    },
   }
-
-  },
-
 ]
