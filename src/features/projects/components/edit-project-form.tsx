@@ -94,9 +94,12 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
             form: finalValues,
             param: { projectId: initialValues.$id } 
         }, {
-           onSuccess: () => {
-            form.reset();
-            // onCancel?.();
+           onSuccess: (data) => {
+              form.reset({
+                ...data.data, // updated project from server
+                image: data.data.imageUrl ?? "",
+              });
+              // onCancel?.();
            }
         });
     };

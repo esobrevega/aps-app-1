@@ -16,10 +16,12 @@ const WorkspaceIdSettingsPage = async ({
     const user = await getCurrent();
     if (!user) redirect("/sign-in");
 
-    const initialValues = await getWorkspace({workspaceId: params.workspaceId});
+    const paramsAw = await params;
+
+    const initialValues = await getWorkspace({workspaceId: paramsAw.workspaceId});
 
     return (
-        <div className="w-full lg:max-w-xl">
+        <div className="w-full lg:max-w-xl ">
             <EditWorkspaceForm initialValues={initialValues}/>
         </div>
     );

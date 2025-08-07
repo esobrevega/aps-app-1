@@ -5,21 +5,24 @@ import { redirect } from "next/navigation";
 import { getCurrent } from "@/features/auth/queries";
 import { getProject } from "@/features/projects/queries";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher";
 
 import { Button } from "@/components/ui/button";
 
 interface ProjectIdPageProps {
-    params: { projectId: string};
+    params: { projectId: string };
 }
 
 const ProjectIdPage = async ({
-     params, 
+    params
 }: ProjectIdPageProps) => {
     const user = await getCurrent();
     if (!user) redirect("/sign-in");
 
+    const paramsA = await params;
+
     const initialValues = await getProject({ 
-        projectId: params.projectId 
+        projectId: paramsA.projectId 
     });
 
     if (!initialValues) {
@@ -46,6 +49,7 @@ const ProjectIdPage = async ({
                     </Button>
                 </div>    
             </div>    
+            <TaskViewSwitcher hideProjectFilter currentProjectId={initialValues.$id} />
         </div>
     );
 }

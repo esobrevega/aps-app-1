@@ -22,13 +22,11 @@ export const Projects = () => {
         workspaceId
     });
 
-
-
     return (
         <div className="mt-4">
             <div className="flex items-center justify-between">
-                <p className="text-xs uppercase text-neutral-500">Projects</p>
-                <RiAddCircleFill onClick={open} className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"/>
+                <p className=" text-sm text-gray-400">Projects</p>
+                <RiAddCircleFill onClick={open} className="size-5 text-white cursor-pointer hover:opacity-75 transition"/>
             </div>
             {isLoading ? (
                 <div className="flex items-center justify-center py-4">
@@ -36,28 +34,31 @@ export const Projects = () => {
                     {/* Or use <span>Loading projects...</span> */}
                 </div>
             ) : (
-                data?.documents.map((project) => {
+                <div className="mt-2">
+                {data?.documents.map((project) => {
                 const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
                 const isActive = pathname === href;
 
                 return (
-                    <Link href={href} key={project.$id} className={`flex items-center gap-2 text-sm font-medium p-2 rounded-md hover:bg-neutral-200 transition-colors`}>
+                    <Link href={href} key={project.$id} className={`flex items-center gap-2 text-sm font-medium rounded-md hover:bg-[#2B2C36] transition-colors`}>
                         <div
                             className={cn(
-                                "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
-                                isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
+                                "flex items-center gap-2.5 p-2.5 rounded-md hover:bg-[#2B2C36] transition cursor-pointer text-white overflow-y-auto hide-scrollbar",
+                                isActive && "bg-[#2B2C36] shadow-sm hover:opacity-100 text-white"
                             )}
                         >
                             <ProjectAvatar
                                 image={project.imageUrl}
                                 name={project.name}
-                                className="size-7.5 rounded-md"
+                                className="size-8 rounded-md"
                             />
                             <span className="truncate">{project.name}</span>
                         </div>
                     </Link>
                 )
-            }))}
+            })}
+            </div>
+            )}
         </div>
     );
 }

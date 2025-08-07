@@ -28,7 +28,7 @@ import {
 
 interface CreateWorkspaceFormProps {
     onCancel?: () => void;
-};
+}
 
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     const router = useRouter();
@@ -67,7 +67,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
 
     return (
         <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-3 bg-blue-500 z-10" />
+            <div className="absolute top-0 left-0 w-full h-3 bg-blue-500 z-10 rounded-t-lg" style={{ top: "-1px", left: 0 }} />
             <CardHeader className="flex px-7 pt-3 pb-1">
                 <CardTitle className="text-xl font-bold">
                     Create a new workspace
