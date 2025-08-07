@@ -1,4 +1,4 @@
-import { FolderIcon, ListCheckIcon, UserIcon, XIcon } from "lucide-react";
+import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
 import { useEffect } from "react";
 
 import { useGetMembers } from "@/features/members/api/use-get-members";
@@ -8,10 +8,8 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { TaskStatus } from "../types";
 import { useTaskFilters } from "../hooks/use-task-filters";
 
-import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/date-time-picker";
 import { Select, SelectContent, SelectSeparator, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
-import { Datepicker } from "@/components/date-picker";
 
 
 interface DataFiltersProps {

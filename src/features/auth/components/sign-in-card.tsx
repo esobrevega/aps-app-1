@@ -119,7 +119,7 @@ export const SignInCard = () => {
             </div>
             <CardContent className="p-7 flex items-center justify-center">
                 <p className="text-sm text-muted-foreground">
-                    Don't have an account? 
+                    Don&apos;t have an account? 
                     <a href="/sign-up" className="text-primary-500 hover:underline ml-1">
                         Sign Up
                     </a>

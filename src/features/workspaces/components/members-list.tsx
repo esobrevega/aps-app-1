@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Fragment } from "react";
-import { ArrowLeftIcon, Loader, Loader2, LoaderPinwheel, LucideLoader, MoreVerticalIcon } from "lucide-react";
+import { ArrowLeftIcon, LucideLoader, MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -93,7 +93,7 @@ export const MembersList = () => {
                             <div className="flex flex-col">
                                 <p className="text-sm font-medium">{member.name}</p>
                                 <p className="text-xs text-muted-foreground">{member.email}</p>
-                                <p className="text-xs text-muted-foreground">{(member as any).role}</p>
+                                {/* <p className="text-xs text-muted-foreground">{(member as any).role}</p> */}
                             </div>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>

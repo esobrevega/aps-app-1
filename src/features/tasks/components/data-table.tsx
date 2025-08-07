@@ -2,7 +2,6 @@
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { HoverCardNearMouse } from "@/components/hover-mouse"
 
 import * as React from "react"
 
@@ -29,14 +28,13 @@ import {
 import { Search } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
-import { TaskOverviewFull } from "./task-overview-full"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { $id: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -60,12 +58,10 @@ export function DataTable<TData, TValue>({
   })
 
   const workspaceId = useWorkspaceId();
-  const handleRowClick = (rowData: TData) => {
-    router.push(`/workspaces/${workspaceId}/tasks/${(rowData as any).$id}`)
+  const handleRowClick = (rowData: { $id: string }) => {
+    router.push(`/workspaces/${workspaceId}/tasks/${rowData.$id}`)
   }
-
   
-
   return (
     <div>
       {/* Search Input */}

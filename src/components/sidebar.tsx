@@ -1,10 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 
 import { Navigation, SubNavigation } from "./navigation";
 import { WorkspaceSwitcher } from "./workspace-switcher";
 import { Projects } from "./projects";
-import { useCurrent } from "@/features/auth/api/use-current";
 
 export const Sidebar = () => {
    // const { isLoading } = useWorkspaceSwitcher();

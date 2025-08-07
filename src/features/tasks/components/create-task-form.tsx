@@ -33,7 +33,6 @@ interface CreateTaskFormProps {
 export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: CreateTaskFormProps) => {
     const workspaceId = useWorkspaceId();
     const { mutate,isPending } = useCreateTask();
-    const { data: user } = useCurrent();
 
     type CreateTaskFormValues = z.input<typeof createTaskSchema>;
 

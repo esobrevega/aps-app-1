@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { TaskStatus } from "../types";
+import { Member } from "@/features/members/types";
 
 interface EventCardProps {
     title: string;
-    assignee: any;
+    assignee: Member;
     project: Project;
     status: TaskStatus;
     id: string;

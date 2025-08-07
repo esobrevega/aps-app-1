@@ -3,20 +3,16 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useConfirmReset } from "@/hooks/use-confirm-reset";
 
 import Image from "next/image"
 import { useRouter } from "next/navigation";
 import { useRef } from "react"; 
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
 import { 
     AlertTriangle, 
     ArrowLeftIcon, 
-    CopyIcon, 
     ImageIcon, 
-    RefreshCcw 
 } from "lucide-react";
 
 import { updateProjectSchema } from "../schemas";
@@ -47,8 +43,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
     const router = useRouter();
     const { mutate,isPending } = useUpdateProject();
     const { 
-        mutate: deleteProject, 
-        isPending:isDeletingProject 
+        mutate: deleteProject
     } = useDeleteProject();
 
     const [DeleteDialog, confirmDelete] = useConfirm(
