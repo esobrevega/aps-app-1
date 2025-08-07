@@ -5,7 +5,7 @@ interface PageErrorProps {
 }
 
 export const PageError = ({ 
-    message = "Something went wrong, please try again later." 
+    message = "404  |  This page cannot be found." 
 }: PageErrorProps) => {
     return (
         <div className="flex flex-col items-center justify-center h-full">
