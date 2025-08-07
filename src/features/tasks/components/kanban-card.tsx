@@ -26,7 +26,7 @@ export const KanbanCard = ({
     task
 }: KanbanCardProps) => {
     return (
-        <div className={`bg-white p-2.5 mb-1.5 rounded shadow-sm hover:shadow-md transition-shadow space-y-3 border-l-4 ${statusColorMap[task.status]}`}>
+        <div className={`bg-white p-2.5 mb-1.5 rounded shadow-sm hover:shadow-md transition-shadow space-y-3 border-1 border-l-4 ${statusColorMap[task.status]}`}>
             <div className="flex items-start justify-between gap-x-2">
                 <p className="text-sm line-clamp-2">{task.name}</p>
                 <TaskActions id={task.$id} projectId={task.projectId}>
@@ -42,14 +42,13 @@ export const KanbanCard = ({
                 <div className="size-1 rounded-full bg-neutral-300"/>
                 <TaskDate value={task.dueDate} className="text-xs"/>
             </div>
-            <div className="flex items-center gap-x-1.5">
+            <div className="flex items-center gap-x-1.5 justify-end">
                 <ProjectAvatar 
                     name={task.project.name}
                     image={task.project.imageUrl}
-                    fallbackClassName="text-[10px]"
-                    className="size-7 rounded-md overflow-hidden"
+                    className="size-5 rounded-md overflow-hidden"
                 />
-                <span className="text-xs font-medium">
+                <span className="text-[9px] font-medium text-neutral-500">
                     {task.project.name}
                 </span>
             </div>

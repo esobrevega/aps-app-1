@@ -139,11 +139,12 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
     }
 
     return (
-        <div className="flex flex-col gap-y-4">
+        <div className="flex flex-col gap-y-4 ">
             <DeleteDialog/>
             <ResetDialog />
-            <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-3 bg-blue-500 z-10" />
+
+            <Card className="w-full h-full border-none shadow-md relative overflow-hidden">
+                {/* <div className="absolute top-0 left-0 w-full h-3 bg-blue-500 z-10" /> */}
 
                 <CardHeader className="flex flex-row items-center gap-x-4 px-7 pt-3 pb-1 space-y-0">
                     <Button size="sm" variant="secondary" onClick={onCancel ? onCancel: () => router.push(`/workspaces/${initialValues.$id}`)}>
@@ -151,7 +152,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
                         Back
                     </Button>
                     <CardTitle className="text-xl font-bold">
-                        {initialValues.name}
+                        General Settings - {initialValues.name}
                     </CardTitle>
                 </CardHeader>
                 <div className="px-7">
@@ -207,8 +208,8 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
                                                 )}
                                                 <div className="flex flex-col">
                                                     <p className="text-sm">Workspace Icon</p>
-                                                    <p className="text-sm text-muted-foreground">
-                                                        JPG, PNG, SVG, or JPEG only. Max 1mb
+                                                    <p className="text-xs text-muted-foreground">
+                                                        JPG, PNG, SVG, or JPEG only (Max 1 mb)
                                                     </p>
                                                     <input 
                                                         className="hidden"
@@ -278,71 +279,47 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
                     </Form>
                 </CardContent>
             </Card>
-            <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-3 bg-green-500 rounded-t-lg" />
-                <CardContent className="px-7 pt-3">
-                    <div className="flex items-center gap-x-2 font-bold text-lg pb-3">
-                        <RefreshCcw className="w-7 h-7 text-green-500"  />
-                        <span>Your invite Code is: {initialValues.inviteCode}</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <p className="text-sm text-muted-foreground">
-                            Use the invite link to add members to your workspace.
-                        </p>
-                        <div className="mt-4">
-                            <div className="flex items-center gap-x-2">
-                                    <Input className="text-sm" disabled value={fullInviteLink}/>
-                                    <Button
-                                        onClick={handleCopyInviteLink}
-                                        variant="secondary"
-                                        className="size-12"
-                                    >
-                                        <CopyIcon className="size-5"/>
-                                    </Button>
-                            </div>
-                        </div>
-                        <DottedSeparator className="py-7"/>
-                        <Button 
-                            className="mt-6 w-fit ml-auto text-green-500"
-                            size="sm"
-                            variant="secondary"
-                            type="button"
-                            disabled={isPending || isResettingInviteCode}
-                            onClick={handleResetInviteCode}
-                        >
-                            Reset Invite Link
-                        </Button>
-                    </div>
-                </CardContent>
+
+            <Card className="p-6 border border-muted rounded-2xl">
+            <div className="flex items-center gap-2 mb-3">
+                <RefreshCcw className="text-green-500" />
+                <h2 className="text-lg font-semibold">Workspace Invite Link</h2>
+            </div>
+            <p className="text-sm text-muted-foreground">Use this link to invite members.</p>
+
+            <div className="flex items-center gap-2 mt-4">
+                <Input value={fullInviteLink} disabled />
+                <Button onClick={handleCopyInviteLink} variant="outline"><CopyIcon className="w-4 h-4" /></Button>
+            </div>
+
+            <div className="flex justify-end mt-4">
+                <Button variant="secondary" size="sm" onClick={handleResetInviteCode} disabled={isPending || isResettingInviteCode}>
+                Reset Invite Link
+                </Button>
+            </div>
             </Card>
-            <Card className="w-full h-full border-none shadow-none relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-3 bg-red-500 rounded-t-lg" />
-                <CardContent className="px-7 pt-3">
-                    <div className="flex items-center gap-x-2 font-bold text-lg pb-3">
-                        <AlertTriangle className="w-7 h-7 text-red-500"  />
-                        <span>Permanent Deletion</span>
-                    </div>
-                    <div className="flex flex-col">
-                        <p className="text-sm text-muted-foreground">
-                            Deleting a company is irreversible and will remove all data associated with the workspace as follows:
-                            <br />– company
-                            <br />– permits
-                            <br />– projects
-                            <br />– tasks
-                        </p>
-                        <Button 
-                            className="mt-6 w-fit ml-auto"
-                            size="sm"
-                            variant="destructive_secondary"
-                            type="button"
-                            disabled={isPending || isDeletingWorkspace}
-                            onClick={handleDelete}
-                        >
-                            Delete Workspace
-                        </Button>
-                    </div>
-                </CardContent>
+
+
+            <Card className="p-6 border border-destructive/40 bg-destructive/5 rounded-2xl">
+            <div className="flex items-center gap-2 mb-3">
+                <AlertTriangle className="text-destructive" />
+                <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
+            </div>
+            <p className="text-sm text-destructive">Deleting this workspace is irreversible. All associated data will be permanently lost:</p>
+            <ul className="list-disc list-inside pl-4 text-sm mt-2 text-destructive/80">
+                <li>Company</li>
+                <li>Permits</li>
+                <li>Projects</li>
+                <li>Tasks</li>
+            </ul>
+
+            <div className="flex justify-end mt-6">
+                <Button variant="destructive_secondary" size="sm" onClick={handleDelete} disabled={isPending || isDeletingWorkspace}>
+                Delete Workspace
+                </Button>
+            </div>
             </Card>
+
         </div>
     );
 };

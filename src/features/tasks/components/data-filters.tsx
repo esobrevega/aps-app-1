@@ -1,4 +1,5 @@
 import { FolderIcon, ListCheckIcon, UserIcon, XIcon } from "lucide-react";
+import { useEffect } from "react";
 
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
@@ -15,9 +16,10 @@ import { Datepicker } from "@/components/date-picker";
 
 interface DataFiltersProps {
     hideProjectFilter?: boolean;
+    currentProjectId?: string;
 }
 
-export const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
+export const DataFilters = ({ hideProjectFilter, currentProjectId }: DataFiltersProps) => {
     const workspaceId = useWorkspaceId();
 
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
@@ -69,7 +71,14 @@ export const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
         }
     }
 
+    useEffect(() => {
+        if (hideProjectFilter && currentProjectId && projectId !== currentProjectId) {
+            setFilters({ projectId: currentProjectId });
+        }
+        // Only run when hideProjectFilter or currentProjectId changes
+    }, [hideProjectFilter, currentProjectId, setFilters, projectId]);
 
+    console.log("currentProjectId:", currentProjectId);
 
     if (isLoading) {
         return null;
@@ -122,27 +131,28 @@ export const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
             </Select>
 
             {/* Project filter */}
-            <Select
-                value={projectId ?? undefined}
-                onValueChange={(value) => onProjectChange(value)}
-            >
-                <SelectTrigger className="w-full lg:w-auto h-8">
-                    <div className="flex items-center pr-2">
-                        <FolderIcon className="size-4 mr-2" />
-                        <SelectValue placeholder="All Projects" />
-                    </div>
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All Projects</SelectItem>
-                    <SelectSeparator />
-                    {projectOptions?.map((project) => (
-                        <SelectItem key={project.value} value={project.value}>
-                            {project.label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-
+            {!hideProjectFilter && (
+                <Select
+                    value={projectId ?? undefined}
+                    onValueChange={(value) => onProjectChange(value)}
+                >
+                    <SelectTrigger className="w-full lg:w-auto h-8">
+                        <div className="flex items-center pr-2">
+                            <FolderIcon className="size-4 mr-2" />
+                            <SelectValue placeholder="All Projects" />
+                        </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Projects</SelectItem>
+                        <SelectSeparator />
+                        {projectOptions?.map((project) => (
+                            <SelectItem key={project.value} value={project.value}>
+                                {project.label}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            )}
             {/* Date filter */}
             <DateTimePicker
                 placeholder="Due Date"

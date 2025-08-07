@@ -20,9 +20,17 @@ import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { DataCalendar } from "./data-calendar";
 
+interface TaskViewSwitcherProps {
+    hideProjectFilter?: boolean;
+    currentProjectId?: string;
+}
 
-export const TaskViewSwitcher = () => {
+export const TaskViewSwitcher = ({
+    hideProjectFilter,
+    currentProjectId
+}: TaskViewSwitcherProps) => {
     const [{
         status,
         projectId,
@@ -98,7 +106,7 @@ export const TaskViewSwitcher = () => {
                     </Button>
                 </div>   
                 <DottedSeparator className="my-4" />
-                    <DataFilters />
+                    <DataFilters hideProjectFilter={hideProjectFilter} currentProjectId={currentProjectId} />
                 <DottedSeparator className="my-4" />
                 { isLoadingTasks ? (
                     <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
@@ -112,8 +120,8 @@ export const TaskViewSwitcher = () => {
                     <TabsContent value="kanban" className="mt-0">
                         <DataKanban onChange={onKanbanChange} data={tasks?.documents ?? []} />
                     </TabsContent>
-                    <TabsContent value="calendar" className="mt-0">
-                        {JSON.stringify(tasks)}
+                    <TabsContent value="calendar" className="mt-0 h-full pb-4">
+                        <DataCalendar data={tasks?.documents ?? []} />
                     </TabsContent>
                 </>
                 )}

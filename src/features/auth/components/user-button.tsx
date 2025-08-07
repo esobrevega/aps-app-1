@@ -19,9 +19,11 @@ export const UserButton = () => {
     const { mutate:logout } = useLogout();
 
     if (isLoading) {
-        return <div className="size-10 rounded-full flex items-center justify-center bg-neutral-200 border border-neutral-200">
-            <Loader className="size-4 animate-spin text-muted-foreground" />
-    </div>
+        return (
+            <div className="size-10 rounded-full flex items-center justify-center bg-neutral-200 border border-neutral-200">
+                <Loader className="size-4 animate-spin text-muted-foreground" />
+            </div>
+        );
     }
 
     if (!user) {
