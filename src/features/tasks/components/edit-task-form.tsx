@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Task, TaskStatus } from "../types";
@@ -11,7 +10,6 @@ import { useUpdateTask } from "../api/use-update-task";
 
 import { MemberAvatar } from "@/features/members/components/member-avatar";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 import { cn } from "@/lib/utils";
 
@@ -32,9 +30,7 @@ interface EditTaskFormProps {
 }
 
 export const EditTaskForm = ({ onCancel, projectOptions, memberOptions, initialValues }: EditTaskFormProps) => {
-    const workspaceId = useWorkspaceId();
-    const router = useRouter();
-    const { mutate,isPending } = useUpdateTask();
+    const { mutate, isPending } = useUpdateTask();
 
     const schema = createTaskSchema.omit({ workspaceId: true, description: true });
     type EditTaskFormValues = z.input<typeof schema>;

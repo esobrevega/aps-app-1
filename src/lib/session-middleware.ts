@@ -10,7 +10,6 @@ import {
     type Databases as DatabasesType,
     type Users as UsersType,
     type Storage as StorageType,
-    Users
 } from "node-appwrite";
 
 import { getCookie } from "hono/cookie";

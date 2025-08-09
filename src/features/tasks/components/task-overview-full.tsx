@@ -1,8 +1,6 @@
-import { PencilIcon } from "lucide-react";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 import { Task } from "../types";
 
@@ -10,7 +8,6 @@ import { MemberAvatar } from "@/features/members/components/member-avatar";
 
 import { TaskDate } from "./task-date";
 import { OverviewProperty } from "./overview-property";
-import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 
 interface TaskOverviewFullProps {
     task: Task;
@@ -19,8 +16,6 @@ interface TaskOverviewFullProps {
 export const TaskOverviewFull = ({ 
     task 
 }: TaskOverviewFullProps) => {
-
-    const { open } = useEditTaskModal();
 
     return (
         <div className="flex flex-col gap-y-4 col-span-1">

@@ -21,15 +21,14 @@ import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { DataCalendar } from "./data-calendar";
+import { useProjectId } from "@/features/projects/hooks/use-project-Id";
 
 interface TaskViewSwitcherProps {
     hideProjectFilter?: boolean;
-    currentProjectId?: string;
 }
 
 export const TaskViewSwitcher = ({
-    hideProjectFilter,
-    currentProjectId
+    hideProjectFilter
 }: TaskViewSwitcherProps) => {
     const [{
         status,
@@ -43,6 +42,7 @@ export const TaskViewSwitcher = ({
     });
 
     const workspaceId = useWorkspaceId();
+    const currentProjectId = useProjectId();
 
     const { mutate: bulkUpdate } = useBulkUpdateTasks();
 
@@ -51,7 +51,7 @@ export const TaskViewSwitcher = ({
         isLoading: isLoadingTasks, 
     } = useGetTasks({ 
         workspaceId,
-        projectId,
+        projectId: currentProjectId || projectId,
         status,
         assigneeId,
         dueDate, 
@@ -106,7 +106,7 @@ export const TaskViewSwitcher = ({
                     </Button>
                 </div>   
                 <DottedSeparator className="my-4" />
-                    <DataFilters hideProjectFilter={hideProjectFilter} currentProjectId={currentProjectId} />
+                    <DataFilters hideProjectFilter={hideProjectFilter} />
                 <DottedSeparator className="my-4" />
                 { isLoadingTasks ? (
                     <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">

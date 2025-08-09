@@ -4,7 +4,6 @@ import {
     Client,
     Account,
     Databases,
-    Storage,
     Users
 } from "node-appwrite";
 import { cookies } from "next/headers";

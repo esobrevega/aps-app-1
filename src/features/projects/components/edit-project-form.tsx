@@ -43,7 +43,8 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
     const router = useRouter();
     const { mutate,isPending } = useUpdateProject();
     const { 
-        mutate: deleteProject
+        mutate: deleteProject,
+        isPending: isDeletingProject
     } = useDeleteProject();
 
     const [DeleteDialog, confirmDelete] = useConfirm(
@@ -254,7 +255,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
                             size="sm"
                             variant="destructive_secondary"
                             type="button"
-                            disabled={isPending}
+                            disabled={isPending || isDeletingProject}
                             onClick={handleDelete}
                         >
                             Delete Project

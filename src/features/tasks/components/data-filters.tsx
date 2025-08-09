@@ -1,5 +1,4 @@
 import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
-import { useEffect } from "react";
 
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
@@ -14,10 +13,9 @@ import { Select, SelectContent, SelectSeparator, SelectTrigger, SelectValue, Sel
 
 interface DataFiltersProps {
     hideProjectFilter?: boolean;
-    currentProjectId?: string;
 }
 
-export const DataFilters = ({ hideProjectFilter, currentProjectId }: DataFiltersProps) => {
+export const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
     const workspaceId = useWorkspaceId();
 
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
@@ -69,14 +67,14 @@ export const DataFilters = ({ hideProjectFilter, currentProjectId }: DataFilters
         }
     }
 
-    useEffect(() => {
-        if (hideProjectFilter && currentProjectId && projectId !== currentProjectId) {
-            setFilters({ projectId: currentProjectId });
-        }
-        // Only run when hideProjectFilter or currentProjectId changes
-    }, [hideProjectFilter, currentProjectId, setFilters, projectId]);
+    // useEffect(() => {
+    //     if (hideProjectFilter && currentProjectId && projectId !== currentProjectId) {
+    //         setFilters({ projectId: currentProjectId });
+    //     }
+    //     // Only run when hideProjectFilter or currentProjectId changes
+    // }, [hideProjectFilter, currentProjectId, setFilters, projectId]);
 
-    console.log("currentProjectId:", currentProjectId);
+    // console.log("currentProjectId:", currentProjectId);
 
     if (isLoading) {
         return null;

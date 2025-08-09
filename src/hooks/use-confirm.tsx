@@ -8,9 +8,7 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardHeader,
     CardTitle,
-    CardFooter
  } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
 

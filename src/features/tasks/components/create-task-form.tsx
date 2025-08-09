@@ -20,8 +20,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DateTimePicker } from "@/components/date-time-picker";
-import { useCurrent } from "@/features/auth/api/use-current";
-
 
 
 interface CreateTaskFormProps {
