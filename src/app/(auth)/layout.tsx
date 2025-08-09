@@ -23,12 +23,12 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             {isSignIn ? (
                 <>
                     <div
-                        className="flex flex-col justify-center items-center w-1/2 p-8"
+                        className="flex flex-col justify-center items-center w-full sm:w-1/2 p-8"
                         style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
                     >
                         {children}
                     </div>
-                    <div className="flex justify-center items-center w-1/2">
+                    <div className="hidden sm:flex justify-center items-center w-1/2">
                         <button className="px-10 py-3 rounded-full bg-gray-700 text-white font-medium">
                             <Link href="/sign-up"> Sign Up </Link>
                         </button>
@@ -36,13 +36,13 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
                 </>
             ) : (
                 <>
-                    <div className="flex justify-center items-center w-1/2">
+                    <div className="hidden sm:flex justify-center items-center w-1/2">
                         <button className="px-10 py-3 rounded-full bg-gray-700 text-white font-medium">
                             <Link href="/sign-in"> Login </Link>
                         </button>
                     </div>
                     <div
-                        className="flex flex-col justify-center items-center w-1/2 p-8"
+                        className="flex flex-col justify-center items-center w-full sm:w-1/2 p-8"
                         style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
                     >
                         {children}

@@ -44,9 +44,11 @@ export const Sidebar = () => {
             {/* Top Section */}
             <div>
                 {/* Logo */}
-                <div className="flex items-center gap-2 mb-6">
-                    <Image src="/EA.svg" alt="Logo" width={100} height={50} className="invert" />
-                    <span className="text-lg font-semibold">Trakmit EA</span>
+                <div className="flex items-center justify-center gap-2 mb-6">
+                    <Image src="/EA2.jpg" alt="Logo" width={100} height={50} className="border-1 rounded-md" />
+                </div>
+                <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="text-lg font-semibold">Permitrakk EA</span>
                 </div>
 
                 {/* Separator */}
