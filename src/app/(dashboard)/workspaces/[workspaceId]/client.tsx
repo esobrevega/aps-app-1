@@ -43,9 +43,12 @@ export const WorkspaceIdClient = () => {
             <Analytics data={analytics} />
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                 <ChartAreaInteractive />
+                <ChartAreaInteractive />
                 <TaskList data={tasks.documents} total={tasks.total} />
-                <ProjectList data={projects.documents} total={projects.total} />
-                <MemberList data={members.documents} total={members.total} />
+                <div className="flex flex-col gap-y-4">
+                    <ProjectList data={projects.documents} total={projects.total} />
+                    <MemberList data={members.documents} total={members.total} />
+                </div>
             </div>
         </div>
     );
@@ -67,7 +70,7 @@ export const TaskList = ({
 
 
     return (
-        <div className="flex flex-col gap-y-4 cols-span-1">
+        <div className="flex flex-col gap-y-4 col-span-1">
             <div className="bg-muted rounded-lg p-4">
                 <div className="flex items-center justify-between">
                     <p className="text-lg font-semibold">
@@ -82,14 +85,14 @@ export const TaskList = ({
                     {data.map((task) => (
                         <li key={task.$id}>
                             <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
-                                <Card className="shadow-none rounded-lg hover:opacity-75 transition">    
-                                    <CardContent className="p-4">
-                                        <p className="text-lg font-medium truncate">{task.name}</p>
+                                <Card className="shadow-1 rounded-xl hover:opacity-75 transition">    
+                                    <CardContent>
+                                        <p className="text-xl font-bold truncate">{task.name}</p>
                                         <div className="flex items-center gap-x-2">
                                             <p>{task.project?.name}</p>
                                         </div>
-                                        <div className="size-1 rounded-full bg-neutral-300"/>
                                         <div className="text-sm text-muted-foreground flex items-center">
+                                            <div className="size-1 rounded-full bg-neutral-300 mr-2"/>
                                             <CalendarIcon className="size-3 mr-1" />
                                             <span className="truncate">
                                                 {formatDistanceToNow(new Date(task.dueDate))}
